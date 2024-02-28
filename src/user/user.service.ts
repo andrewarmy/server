@@ -5,7 +5,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserService { 
     constructor(private prisma: PrismaService) {}
 
-    getAll() {
-        return this.prisma.user.findMany()
+    async findOne(username: string) {
+        const user = await this.prisma.user.findFirst({
+            where: { username }
+        })
+        return user
     }
 }

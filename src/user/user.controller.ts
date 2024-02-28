@@ -4,9 +4,4 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService) {}
-    
-    @Get()
-    listAllUsers() {
-        return this.userService.getAll()
-    }
 }

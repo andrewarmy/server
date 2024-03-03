@@ -21,7 +21,7 @@ export class AuthService {
         if (!user) throw new UnauthorizedException()
         const correctPassword = await this.passwordService.comparePassword(password, user.password)
         if (!correctPassword) throw new UnauthorizedException()
-        const token = await this.generateToken(user.id, username)
+        const token = await this.generateToken(user.id, username, user.name)
 
         return {
             name: user.name,
@@ -41,14 +41,21 @@ export class AuthService {
         })
     }
 
-    async generateToken(userId: number, username: string): Promise<string> {
-        const payload = { sub: userId, username };
+    async generateToken(userId: number, username: string, name: string): Promise<string> {
+        const payload = { id: userId, username, name };
         return this.jwtService.sign(payload, {
             secret: this.configService.get('APP_KEY')
         });
     }
 
     async verifyToken(token: string): Promise<any> {
-        return this.jwtService.verify(token);
+        try {
+            const user = await this.jwtService.verify(token, {
+                secret: this.configService.get('APP_KEY'),
+            });
+            return user
+        } catch (e) {
+            throw new UnauthorizedException();
+        }
     }
 }

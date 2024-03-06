@@ -1,11 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
 import { PoliceService } from './police.service';
 import { CreatePoliceDto } from './dto/create-police.dto';
 import { UpdatePoliceDto } from './dto/update-police.dto';
 
 @Controller('police')
 export class PoliceController {
-  constructor(private readonly policeService: PoliceService) {}
+  constructor(private readonly policeService: PoliceService) { }
 
   @Post()
   create(@Body() createPoliceDto: CreatePoliceDto) {
@@ -13,8 +13,11 @@ export class PoliceController {
   }
 
   @Get()
-  findAll() {
-    return this.policeService.findAll();
+  findAll(
+    @Query('skip', ParseIntPipe) skip: number,
+    @Query('take', ParseIntPipe) take: number
+  ) {
+    return this.policeService.findAll({ skip, take });
   }
 
   @Get(':id')

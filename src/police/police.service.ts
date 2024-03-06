@@ -10,6 +10,7 @@ export class PoliceService {
   async create(createPoliceDto: CreatePoliceDto) {
     try {
       createPoliceDto.birth_date = new Date(createPoliceDto.birth_date)
+      createPoliceDto.national_number = createPoliceDto.national_number || undefined
       return await this.prismaService.police.create({
         data: createPoliceDto
       })
@@ -18,8 +19,10 @@ export class PoliceService {
     }
   }
 
-  findAll() {
+  findAll({ skip, take }: FilterQueryProps) {
     return this.prismaService.police.findMany({
+      skip,
+      take,
       select: { id: true, name: true, national_number: true, telephone_number: true, created_at: true, updated_at: true }
     });
   }

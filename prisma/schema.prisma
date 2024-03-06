@@ -14,8 +14,24 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  name     String
-  username String  @unique
-  password String?
+  id        Int      @id @default(autoincrement())
+  name      String
+  username  String   @unique
+  password  String?
+  createdAt DateTime @default(now())
+}
+
+model Police {
+  id                Int      @id @default(autoincrement())
+  name              String
+  national_number   String?  @unique()
+  birth_date        DateTime
+  telephone_number  String
+  phone_number_work String?
+  phone_number_home String?
+  address           String
+  religion          String
+  gender            String
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
 }

@@ -15,9 +15,10 @@ export class PoliceController {
   @Get()
   findAll(
     @Query('skip', ParseIntPipe) skip: number,
-    @Query('take', ParseIntPipe) take: number
+    @Query('take', ParseIntPipe) take: number,
+    @Query('search') search?: string,
   ) {
-    return this.policeService.findAll({ skip, take });
+    return this.policeService.findAll({ skip, take, search });
   }
 
   @Get(':id')
@@ -30,8 +31,10 @@ export class PoliceController {
     return this.policeService.update(+id, updatePoliceDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.policeService.remove(+id);
+  @Delete()
+  remove(@Query('ids') ids: string) {
+    const allId = ids?.split(',')?.map((id) => +id).filter(id => !isNaN(id) && id != 0) || []
+    console.log(allId)
+    return this.policeService.remove(allId);
   }
 }

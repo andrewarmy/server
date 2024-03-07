@@ -19,12 +19,32 @@ export class PoliceService {
     }
   }
 
-  findAll({ skip, take }: FilterQueryProps) {
-    return this.prismaService.police.findMany({
+  async findAll({ skip, take, search }: FilterQueryProps) {
+    let where = {}
+    if (search) {
+      const searchTerm = search.toLowerCase()
+      const searchFields = ['name', 'national_number', 'telephone_number']
+      const queryFields: any[] = searchFields.map((field) => ({ [field]: { contains: searchTerm } }))
+      if (!isNaN(+searchTerm)) {
+        queryFields.push({
+          id: {
+            equals: +searchTerm,
+          },
+        })
+      }
+      where = { OR: queryFields }
+    }
+    const data = await this.prismaService.police.findMany({
       skip,
       take,
+      where,
       select: { id: true, name: true, national_number: true, telephone_number: true, created_at: true, updated_at: true }
     });
+
+    return {
+      data,
+      total: (await this.prismaService.police.count({ where }))
+    }
   }
 
   async findOne(id: number) {
@@ -44,10 +64,13 @@ export class PoliceService {
     }
   }
 
-  async remove(id: number) {
-    await this.findOne(id)
-    return this.prismaService.police.delete({
-      where: { id }
-    })
+  async remove(ids: number[]) {
+    for (const id of ids) {
+      await this.findOne(id)
+      await this.prismaService.police.delete({
+        where: { id }
+      })
+    }
+    return 'deleted'
   }
 }

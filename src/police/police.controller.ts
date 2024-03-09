@@ -34,7 +34,6 @@ export class PoliceController {
   @Delete()
   remove(@Query('ids') ids: string) {
     const allId = ids?.split(',')?.map((id) => +id).filter(id => !isNaN(id) && id != 0) || []
-    console.log(allId)
     return this.policeService.remove(allId);
   }
 }

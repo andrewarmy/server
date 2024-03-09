@@ -1,4 +1,4 @@
-import { IsEmpty, IsEnum, IsNotEmpty, IsString, MinLength, ValidateIf } from "class-validator";
+import { IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
 
 export enum Religion {
     christian = 'مسيحى',
@@ -37,11 +37,11 @@ export class CreateContactDto {
     telephone_number: string
 
     @MinLength(11)
-    @ValidateIf((o, value) => value !== '')
+    @IsOptional()
     @IsString()
     phone_number_work?: string
 
-    @ValidateIf((o, value) => value !== '')
+    @IsOptional()
     @MinLength(11)
     @IsString()
     phone_number_home?: string;

@@ -32,6 +32,7 @@ model Police {
   address           String
   religion          String
   gender            String
+  police_number     String   @unique()
   created_at        DateTime @default(now())
   updated_at        DateTime @updatedAt
 }

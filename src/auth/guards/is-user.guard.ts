@@ -29,7 +29,7 @@ export class IsUserGuard implements CanActivate {
         return true;
       } catch (error) {
         // Handle invalid token
-        throw new UnauthorizedException();
+        new UnauthorizedException();
       }
     }
 

@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { PoliceModule } from './police/police.module';
+import { AuditModule } from './audit/audit.module';
 
 @Module({
   imports: [
@@ -12,10 +13,12 @@ import { PoliceModule } from './police/police.module';
     UserModule,
     AuthModule,
     PoliceModule,
+    AuditModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
   ]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -3,11 +3,13 @@ import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { RegisterDto } from './dto/register.dto';
+import { Audit } from 'src/audit/decorator/audit.decorator';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @Audit('Do a Login Request')
     @Public()
     @Post('login')
     login(@Body() credentials: LoginDto) {

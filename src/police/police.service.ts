@@ -38,7 +38,7 @@ export class PoliceService {
       skip,
       take,
       where,
-      select: { id: true, name: true, national_number: true, telephone_number: true, created_at: true, updated_at: true }
+      select: { id: true, name: true, national_number: true, telephone_number: true, police_number: true }
     });
 
     return {

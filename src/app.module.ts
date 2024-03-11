@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { PoliceModule } from './police/police.module';
 import { AuditModule } from './audit/audit.module';
+import { WorkDirectionModule } from './work-direction/work-direction.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AuditModule } from './audit/audit.module';
     UserModule,
     AuthModule,
     PoliceModule,
+    WorkDirectionModule,
     AuditModule,
   ],
   controllers: [AppController],

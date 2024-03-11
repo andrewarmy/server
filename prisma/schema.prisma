@@ -30,9 +30,9 @@ model User {
 }
 
 model Police {
-  id                Int      @id @default(autoincrement())
+  id                Int           @id @default(autoincrement())
   name              String
-  national_number   String?  @unique()
+  national_number   String?       @unique()
   birth_date        DateTime
   telephone_number  String
   phone_number_work String?
@@ -40,7 +40,15 @@ model Police {
   address           String
   religion          String
   gender            String
-  police_number     String   @unique()
-  created_at        DateTime @default(now())
-  updated_at        DateTime @updatedAt
+  police_number     String        @unique()
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+  workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
+  work_direction_id Int
+}
+
+model WorkDirection {
+  id     Int      @id @default(autoincrement())
+  name   String
+  Police Police[]
 }

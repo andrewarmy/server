@@ -1,12 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateWorkDirectionDto } from './dto/create-work-direction.dto';
 import { UpdateWorkDirection } from './dto/update-work-direction.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaUtilService } from 'src/prisma/prisma-util.service';
 
 @Injectable()
-export class WorkDirectionService {
-  constructor(private readonly prismaService: PrismaService) { }
-
+export class WorkDirectionService extends PrismaUtilService {
   async create(createWorkDirectionDto: CreateWorkDirectionDto) {
     try {
       return await this.prismaService.workDirection.create({
@@ -18,20 +16,7 @@ export class WorkDirectionService {
   }
 
   async findAll({ skip, take, search }: FilterQueryProps) {
-    let where = {}
-    if (search) {
-      const searchTerm = search.toLowerCase()
-      const searchFields = ['name']
-      const queryFields: any[] = searchFields.map((field) => ({ [field]: { contains: searchTerm } }))
-      if (!isNaN(+searchTerm)) {
-        queryFields.push({
-          id: {
-            equals: +searchTerm,
-          },
-        })
-      }
-      where = { OR: queryFields }
-    }
+    const where = this.searchQuery(search, ['name'])
     const data = await this.prismaService.workDirection.findMany({
       skip,
       take,

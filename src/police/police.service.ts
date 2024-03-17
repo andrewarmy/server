@@ -1,11 +1,10 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePoliceDto } from './dto/create-police.dto';
 import { UpdatePoliceDto } from './dto/update-police.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaUtilService } from 'src/prisma/prisma-util.service';
 
 @Injectable()
-export class PoliceService {
-  constructor(private readonly prismaService: PrismaService) { }
+export class PoliceService extends PrismaUtilService {
 
   async create(createPoliceDto: CreatePoliceDto) {
     try {
@@ -20,20 +19,7 @@ export class PoliceService {
   }
 
   async findAll({ skip, take, search }: FilterQueryProps) {
-    let where = {}
-    if (search) {
-      const searchTerm = search.toLowerCase()
-      const searchFields = ['name', 'national_number', 'telephone_number']
-      const queryFields: any[] = searchFields.map((field) => ({ [field]: { contains: searchTerm } }))
-      if (!isNaN(+searchTerm)) {
-        queryFields.push({
-          id: {
-            equals: +searchTerm,
-          },
-        })
-      }
-      where = { OR: queryFields }
-    }
+    const where = await this.searchQuery(search, ['name', 'national_number', 'telephone_number'])
     const data = await this.prismaService.police.findMany({
       skip,
       take,

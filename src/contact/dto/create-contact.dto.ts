@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from "class-validator";
+import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from "class-validator";
 
 export enum Religion {
     christian = 'مسيحى',
@@ -58,4 +58,8 @@ export class CreateContactDto {
     @IsNotEmpty()
     @IsEnum(Gender)
     gender: Gender
+
+    @IsNotEmpty()
+    @IsNumber()
+    work_direction_id: number;
 }

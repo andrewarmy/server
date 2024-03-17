@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { PoliceModule } from './police/police.module';
 import { AuditModule } from './audit/audit.module';
 import { WorkDirectionModule } from './work-direction/work-direction.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { WorkDirectionModule } from './work-direction/work-direction.module';
     PoliceModule,
     WorkDirectionModule,
     AuditModule,
+    PrismaModule
   ],
   controllers: [AppController],
   providers: [

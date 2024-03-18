@@ -59,6 +59,10 @@ export class CreateContactDto {
     @IsEnum(Gender)
     gender: Gender
 
+    @IsOptional()
+    @IsString()
+    work_at?: string;
+
     @IsNotEmpty()
     @IsNumber()
     work_direction_id: number;

@@ -45,6 +45,7 @@ model Police {
   updated_at        DateTime      @updatedAt
   workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
   work_direction_id Int
+  work_at           String?
 }
 
 model WorkDirection {

@@ -19,7 +19,7 @@ export class PoliceService extends PrismaUtilService {
   }
 
   async findAll({ skip, take, search }: FilterQueryProps) {
-    const where = await this.searchQuery(search, ['name', 'national_number', 'telephone_number'])
+    const where = this.searchQuery(search, ['name', 'national_number', 'telephone_number'])
     const data = await this.prismaService.police.findMany({
       skip,
       take,

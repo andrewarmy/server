@@ -21,6 +21,4 @@ export class PrismaUtilService {
         }
         return where
     }
-
-
 }

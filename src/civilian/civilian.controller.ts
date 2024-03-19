@@ -5,11 +5,11 @@ import { UpdateCivilianDto } from './dto/update-civilian.dto';
 
 @Controller('civilian')
 export class CivilianController {
-  constructor(private readonly policeService: CivilianService) { }
+  constructor(private readonly civilianService: CivilianService) { }
 
   @Post()
-  create(@Body() createPoliceDto: CreateCivilianDto) {
-    return this.policeService.create(createPoliceDto);
+  create(@Body() createCivilianDto: CreateCivilianDto) {
+    return this.civilianService.create(createCivilianDto);
   }
 
   @Get()
@@ -18,22 +18,22 @@ export class CivilianController {
     @Query('take', ParseIntPipe) take: number,
     @Query('search') search?: string,
   ) {
-    return this.policeService.findAll({ skip, take, search });
+    return this.civilianService.findAll({ skip, take, search });
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.policeService.findOne(+id);
+    return this.civilianService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePoliceDto: UpdateCivilianDto) {
-    return this.policeService.update(+id, updatePoliceDto);
+  update(@Param('id') id: string, @Body() updateCivilianDto: UpdateCivilianDto) {
+    return this.civilianService.update(+id, updateCivilianDto);
   }
 
   @Delete()
   remove(@Query('ids') ids: string) {
     const allId = ids?.split(',')?.map((id) => +id).filter(id => !isNaN(id) && id != 0) || []
-    return this.policeService.remove(allId);
+    return this.civilianService.remove(allId);
   }
 }

@@ -5,11 +5,11 @@ import { UpdateIndividualDto } from './dto/update-individual.dto';
 
 @Controller('individual')
 export class IndividualController {
-  constructor(private readonly policeService: IndividualService) { }
+  constructor(private readonly individualService: IndividualService) { }
 
   @Post()
-  create(@Body() createPoliceDto: CreateIndividualDto) {
-    return this.policeService.create(createPoliceDto);
+  create(@Body() createIndividualDto: CreateIndividualDto) {
+    return this.individualService.create(createIndividualDto);
   }
 
   @Get()
@@ -18,22 +18,22 @@ export class IndividualController {
     @Query('take', ParseIntPipe) take: number,
     @Query('search') search?: string,
   ) {
-    return this.policeService.findAll({ skip, take, search });
+    return this.individualService.findAll({ skip, take, search });
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.policeService.findOne(+id);
+    return this.individualService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePoliceDto: UpdateIndividualDto) {
-    return this.policeService.update(+id, updatePoliceDto);
+  update(@Param('id') id: string, @Body() updateIndividualDto: UpdateIndividualDto) {
+    return this.individualService.update(+id, updateIndividualDto);
   }
 
   @Delete()
   remove(@Query('ids') ids: string) {
     const allId = ids?.split(',')?.map((id) => +id).filter(id => !isNaN(id) && id != 0) || []
-    return this.policeService.remove(allId);
+    return this.individualService.remove(allId);
   }
 }

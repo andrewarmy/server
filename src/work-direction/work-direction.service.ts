@@ -10,7 +10,7 @@ export class WorkDirectionService extends PrismaUtilService {
   constructor(protected readonly prismaService: PrismaService) {
     super({
       prismaService: prismaService.workDirection,
-      selectColumns: { name: true },
+      selectColumns: { id: true, name: true },
     })
   }
 

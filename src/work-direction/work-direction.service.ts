@@ -2,9 +2,18 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { CreateWorkDirectionDto } from './dto/create-work-direction.dto';
 import { UpdateWorkDirection } from './dto/update-work-direction.dto';
 import { PrismaUtilService } from 'src/prisma/prisma-util.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class WorkDirectionService extends PrismaUtilService {
+
+  constructor(protected readonly prismaService: PrismaService) {
+    super({
+      prismaService: prismaService.workDirection,
+      selectColumns: { name: true },
+    })
+  }
+
   async create(createWorkDirectionDto: CreateWorkDirectionDto) {
     try {
       return await this.prismaService.workDirection.create({
@@ -13,27 +22,6 @@ export class WorkDirectionService extends PrismaUtilService {
     } catch (e) {
       throw new BadRequestException()
     }
-  }
-
-  async findAll({ skip, take, search }: FilterQueryProps) {
-    const where = this.searchQuery(search, ['name'])
-    const data = await this.prismaService.workDirection.findMany({
-      skip,
-      take,
-      where,
-      select: { id: true, name: true }
-    });
-
-    return {
-      data,
-      total: (await this.prismaService.workDirection.count({ where }))
-    }
-  }
-
-  async findOne(id: number) {
-    const workDirection = await this.prismaService.workDirection.findUnique({ where: { id } })
-    if (!workDirection) throw new NotFoundException()
-    return workDirection
   }
 
   async update(id: number, updatePoliceDto: UpdateWorkDirection) {
@@ -45,15 +33,5 @@ export class WorkDirectionService extends PrismaUtilService {
     } catch (e) {
       throw new BadRequestException()
     }
-  }
-
-  async remove(ids: number[]) {
-    for (const id of ids) {
-      await this.findOne(id)
-      await this.prismaService.workDirection.delete({
-        where: { id }
-      })
-    }
-    return 'deleted'
   }
 }

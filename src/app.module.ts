@@ -15,7 +15,7 @@ import { PrismaModule } from './prisma/prisma.module';
     UserModule,
     AuthModule,
     PoliceModule,
-    WorkDirectionModule,
+    // WorkDirectionModule,
     AuditModule,
     PrismaModule
   ],

@@ -23,10 +23,6 @@ export class CreateContactDto {
     @IsString()
     name: string;
 
-    @IsOptional()
-    @IsString()
-    national_number?: string
-
     @IsNotEmpty()
     @IsString()
     birth_date: Date

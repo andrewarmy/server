@@ -6,4 +6,4 @@ import { IndividualController } from './individual.controller';
   controllers: [IndividualController],
   providers: [IndividualService],
 })
-export class PoliceModule { }
+export class IndividualModule { }

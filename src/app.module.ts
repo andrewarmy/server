@@ -8,6 +8,8 @@ import { PoliceModule } from './police/police.module';
 import { AuditModule } from './audit/audit.module';
 import { WorkDirectionModule } from './work-direction/work-direction.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { CivilianModule } from './civilian/civilian.module';
+import { IndividualModule } from './individual/individual.module';
 
 @Module({
   imports: [
@@ -15,7 +17,9 @@ import { PrismaModule } from './prisma/prisma.module';
     UserModule,
     AuthModule,
     PoliceModule,
-    // WorkDirectionModule,
+    WorkDirectionModule,
+    CivilianModule,
+    IndividualModule,
     AuditModule,
     PrismaModule
   ],

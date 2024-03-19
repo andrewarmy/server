@@ -1,11 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 
 interface PrismaUtilConfig {
     prismaService: any;
     selectColumns: Record<string, any>
 }
 
-@Injectable()
 export class PrismaUtilService {
     constructor(protected readonly prismaConfig: PrismaUtilConfig) { }
 

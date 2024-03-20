@@ -11,6 +11,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { CivilianModule } from './civilian/civilian.module';
 import { IndividualModule } from './individual/individual.module';
 import { GroupModule } from './group/group.module';
+import { CycleModule } from './cycle/cycle.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { GroupModule } from './group/group.module';
     IndividualModule,
     AuditModule,
     PrismaModule,
-    GroupModule
+    GroupModule,
+    CycleModule
   ],
   controllers: [AppController],
   providers: [

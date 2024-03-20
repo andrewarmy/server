@@ -10,7 +10,7 @@ export class PoliceService extends PrismaUtilService {
   constructor(protected readonly prismaService: PrismaService) {
     super({
       prismaService: prismaService.police,
-      selectColumns: { id: true, name: true, national_number: true, telephone_number: true, police_number: true },
+      selectColumns: { id: true, name: true, position: true, national_number: true, telephone_number: true, police_number: true },
     })
   }
 

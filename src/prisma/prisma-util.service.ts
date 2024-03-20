@@ -10,7 +10,8 @@ export class PrismaUtilService {
 
     async findAll({ skip, take, search }: FilterQueryProps) {
         const { prismaService, selectColumns } = this.prismaConfig
-        const where = this.searchQuery(search, Object.keys(selectColumns))
+        const filteredKeys = Object.keys(selectColumns).filter((key) => key != 'id')
+        const where = this.searchQuery(search, filteredKeys)
         const data = await prismaService.findMany({
             skip,
             take,
@@ -34,13 +35,13 @@ export class PrismaUtilService {
     async remove(ids: number[]) {
         const { prismaService } = this.prismaConfig
         for (const id of ids) {
-          await this.findOne(id)
-          await prismaService.delete({
-            where: { id }
-          })
+            await this.findOne(id)
+            await prismaService.delete({
+                where: { id }
+            })
         }
         return 'deleted'
-      }
+    }
 
 
     searchQuery(search: string, searchFields: string[]) {

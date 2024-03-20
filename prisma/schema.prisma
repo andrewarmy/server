@@ -30,9 +30,9 @@ model User {
 }
 
 model Police {
-  id                Int           @id @default(autoincrement())
+  id                Int               @id @default(autoincrement())
   name              String
-  national_number   String?       @unique()
+  national_number   String?           @unique()
   birth_date        DateTime
   telephone_number  String
   phone_number_work String?
@@ -40,41 +40,43 @@ model Police {
   address           String
   religion          String
   gender            String
-  police_number     String        @unique()
+  police_number     String            @unique()
   police_type       String
   certificate       String
   position          String
-  workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
+  workDirection     WorkDirection     @relation(fields: [work_direction_id], references: [id])
   work_direction_id Int
   work_at           String?
-  created_at        DateTime      @default(now())
-  updated_at        DateTime      @updatedAt
+  created_at        DateTime          @default(now())
+  updated_at        DateTime          @updatedAt
+  PolicesInCycles   PolicesInCycles[]
 }
 
 model Individual {
-  id                Int           @id @default(autoincrement())
-  name              String
-  national_number   String        @unique()
-  birth_date        DateTime
-  telephone_number  String
-  phone_number_work String?
-  phone_number_home String?
-  address           String
-  religion          String
-  gender            String
-  position          String
-  certificate       String
-  workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
-  work_direction_id Int
-  work_at           String?
-  created_at        DateTime      @default(now())
-  updated_at        DateTime      @updatedAt
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  national_number    String               @unique()
+  birth_date         DateTime
+  telephone_number   String
+  phone_number_work  String?
+  phone_number_home  String?
+  address            String
+  religion           String
+  gender             String
+  position           String
+  certificate        String
+  workDirection      WorkDirection        @relation(fields: [work_direction_id], references: [id])
+  work_direction_id  Int
+  work_at            String?
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
+  IndividualsInCycle IndividualsInCycle[]
 }
 
 model Civilian {
-  id                Int      @id @default(autoincrement())
+  id                Int                 @id @default(autoincrement())
   name              String
-  national_number   String   @unique()
+  national_number   String              @unique()
   birth_date        DateTime
   telephone_number  String
   phone_number_work String?
@@ -83,11 +85,60 @@ model Civilian {
   religion          String
   gender            String
   certificate       String
-  workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
+  workDirection     WorkDirection       @relation(fields: [work_direction_id], references: [id])
   work_direction_id Int
   work_at           String?
-  created_at        DateTime      @default(now())
-  updated_at        DateTime      @updatedAt
+  created_at        DateTime            @default(now())
+  updated_at        DateTime            @updatedAt
+  CiviliansInCycles CiviliansInCycles[]
+}
+
+model Group {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Cycle Cycle[]
+}
+
+model Cycle {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  group              Group                @relation(fields: [group_id], references: [id])
+  group_id           Int
+  start_date         DateTime
+  end_date           DateTime
+  PolicesInCycles    PolicesInCycles[]
+  CiviliansInCycles  CiviliansInCycles[]
+  IndividualsInCycle IndividualsInCycle[]
+}
+
+model PolicesInCycles {
+  police      Police   @relation(fields: [police_id], references: [id])
+  police_id   Int
+  cycle       Cycle    @relation(fields: [cycle_id], references: [id])
+  cycle_id    Int
+  assigned_at DateTime @default(now())
+
+  @@id([police_id, cycle_id])
+}
+
+model CiviliansInCycles {
+  civilian    Civilian @relation(fields: [civilian_id], references: [id])
+  civilian_id Int
+  cycle       Cycle    @relation(fields: [cycle_id], references: [id])
+  cycle_id    Int
+  assigned_at DateTime @default(now())
+
+  @@id([civilian_id, cycle_id])
+}
+
+model IndividualsInCycle {
+  individual    Individual @relation(fields: [individual_id], references: [id])
+  individual_id Int
+  cycle         Cycle      @relation(fields: [cycle_id], references: [id])
+  cycle_id      Int
+  assigned_at   DateTime   @default(now())
+
+  @@id([individual_id, cycle_id])
 }
 
 model WorkDirection {

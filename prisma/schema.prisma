@@ -94,9 +94,11 @@ model Civilian {
 }
 
 model Group {
-  id    Int     @id @default(autoincrement())
-  name  String
-  Cycle Cycle[]
+  id         Int      @id @default(autoincrement())
+  name       String
+  Cycle      Cycle[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Cycle {
@@ -106,6 +108,7 @@ model Cycle {
   group_id           Int
   start_date         DateTime
   end_date           DateTime
+  created_at         DateTime             @default(now())
   PolicesInCycles    PolicesInCycles[]
   CiviliansInCycles  CiviliansInCycles[]
   IndividualsInCycle IndividualsInCycle[]

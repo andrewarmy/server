@@ -10,6 +10,7 @@ import { WorkDirectionModule } from './work-direction/work-direction.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { CivilianModule } from './civilian/civilian.module';
 import { IndividualModule } from './individual/individual.module';
+import { GroupModule } from './group/group.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { IndividualModule } from './individual/individual.module';
     CivilianModule,
     IndividualModule,
     AuditModule,
-    PrismaModule
+    PrismaModule,
+    GroupModule
   ],
   controllers: [AppController],
   providers: [

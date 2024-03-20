@@ -16,7 +16,6 @@ export class CivilianService extends PrismaUtilService {
 
   async create(createCivilianDto: CreateCivilianDto) {
     try {
-      createCivilianDto.birth_date = new Date(createCivilianDto.birth_date)
       return await this.prismaService.civilian.create({
         data: createCivilianDto
       })

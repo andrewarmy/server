@@ -16,7 +16,6 @@ export class IndividualService extends PrismaUtilService {
 
   async create(createIndividualDto: CreateIndividualDto) {
     try {
-      createIndividualDto.birth_date = new Date(createIndividualDto.birth_date)
       createIndividualDto.national_number = createIndividualDto.national_number || undefined
       return await this.prismaService.individual.create({
         data: createIndividualDto

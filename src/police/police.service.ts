@@ -16,7 +16,6 @@ export class PoliceService extends PrismaUtilService {
 
   async create(createPoliceDto: CreatePoliceDto) {
     try {
-      createPoliceDto.birth_date = new Date(createPoliceDto.birth_date)
       createPoliceDto.national_number = createPoliceDto.national_number || undefined
       return await this.prismaService.police.create({
         data: createPoliceDto

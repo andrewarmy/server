@@ -1,5 +1,20 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, MinLength } from "class-validator";
 
+
+export enum Certificate {
+    akok = 'ليسانس حقوق',
+    hndsa = 'ب.هندسة',
+    alom = 'ب.علوم',
+    khdma = 'ب.خدمةاجتماعية',
+    zra3a = 'ب.زراعة',
+    teb = 'ب.طب',
+    tgara_5aregia = 'ب.تجارة خارجية',
+    tgara = 'ب.تجارة',
+    trbia_riadia = 'ب.تربية رياضية',
+    adab = 'ليسانس آداب',
+    aktesad_alom_siasia = 'اقتصاد و علوم سياسية'
+}
+
 export enum Religion {
     christian = 'مسيحى',
     muslim = 'مسلم',
@@ -54,6 +69,12 @@ export class CreateContactDto {
     @IsNotEmpty()
     @IsEnum(Gender)
     gender: Gender
+
+
+    // TODO: in the future we can split this into another table (1-m)
+    @IsNotEmpty()
+    @IsEnum(Certificate)
+    certificate: Certificate
 
     @IsOptional()
     @IsString()

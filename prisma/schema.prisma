@@ -41,24 +41,9 @@ model Police {
   religion          String
   gender            String
   police_number     String        @unique()
-  workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
-  work_direction_id Int
-  work_at           String?
-  created_at        DateTime      @default(now())
-  updated_at        DateTime      @updatedAt
-}
-
-model Civilian {
-  id                Int           @id @default(autoincrement())
-  name              String
-  national_number   String        @unique()
-  birth_date        DateTime
-  telephone_number  String
-  phone_number_work String?
-  phone_number_home String?
-  address           String
-  religion          String
-  gender            String
+  police_type       String
+  certificate       String
+  position          String
   workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
   work_direction_id Int
   work_at           String?
@@ -77,6 +62,27 @@ model Individual {
   address           String
   religion          String
   gender            String
+  position          String
+  certificate       String
+  workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
+  work_direction_id Int
+  work_at           String?
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+}
+
+model Civilian {
+  id                Int      @id @default(autoincrement())
+  name              String
+  national_number   String   @unique()
+  birth_date        DateTime
+  telephone_number  String
+  phone_number_work String?
+  phone_number_home String?
+  address           String
+  religion          String
+  gender            String
+  certificate       String
   workDirection     WorkDirection @relation(fields: [work_direction_id], references: [id])
   work_direction_id Int
   work_at           String?

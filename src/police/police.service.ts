@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePoliceDto } from './dto/create-police.dto';
 import { UpdatePoliceDto } from './dto/update-police.dto';
 import { PrismaUtilService } from 'src/prisma/prisma-util.service';
@@ -16,7 +16,6 @@ export class PoliceService extends PrismaUtilService {
 
   async create(createPoliceDto: CreatePoliceDto) {
     try {
-      createPoliceDto.national_number = createPoliceDto.national_number || undefined
       return await this.prismaService.police.create({
         data: createPoliceDto
       })

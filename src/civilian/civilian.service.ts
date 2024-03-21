@@ -11,6 +11,11 @@ export class CivilianService extends PrismaUtilService {
     super({
       prismaService: prismaService.civilian,
       selectColumns: { id: true, name: true, national_number: true, telephone_number: true },
+      smartSearch: {
+        name: 'string',
+        national_number: 'string',
+        telephone_number: 'string',
+      }
     })
   }
 

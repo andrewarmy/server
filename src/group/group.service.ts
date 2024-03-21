@@ -11,6 +11,9 @@ export class GroupService extends PrismaUtilService {
         super({
             prismaService: prismaService.group,
             selectColumns: { id: true, name: true },
+            smartSearch: {
+                name: 'string'
+            }
         })
     }
 

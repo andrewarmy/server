@@ -1,21 +1,28 @@
 import { NotFoundException } from '@nestjs/common';
+import dayjs from 'dayjs';
 
+type SmartSearchType = Record<string, 'string' | 'date' | 'number'>
 interface PrismaUtilConfig {
     prismaService: any;
-    selectColumns: Record<string, any>
+    selectColumns: Record<string, any>,
+    smartSearch?: SmartSearchType
 }
 
 export class PrismaUtilService {
     constructor(protected readonly prismaConfig: PrismaUtilConfig) { }
 
-    async findAll({ skip, take, search }: FilterQueryProps) {
-        const { prismaService, selectColumns } = this.prismaConfig
-        const filteredKeys = Object.keys(selectColumns).filter((key) => key != 'id')
-        const where = this.searchQuery(search, filteredKeys)
+    async findAll({ skip, take, search, where = {} }: FilterQueryProps) {
+        const { prismaService, selectColumns, smartSearch } = this.prismaConfig
+        const whereSearchQuery = smartSearch ? this.smartSearchQuery(search, smartSearch) : {}
         const data = await prismaService.findMany({
             skip,
             take,
-            where,
+            where: {
+                AND: [
+                    where,
+                    whereSearchQuery
+                ]
+            },
             select: selectColumns
         })
 
@@ -44,19 +51,36 @@ export class PrismaUtilService {
     }
 
 
-    searchQuery(search: string, searchFields: string[]) {
-        let where = {}
-        if (search) {
+    smartSearchQuery(search: string, searchFields: SmartSearchType) {
+        const where = { OR: [] }
+        if (search && searchFields) {
             const searchTerm = search.toLowerCase()
-            const queryFields: any[] = searchFields.map((field) => ({ [field]: { contains: searchTerm } }))
+            for (const searchField of Object.keys(searchFields)) {
+                const typeField = searchFields[searchField]
+                let fieldQuery = {}
+                switch (typeField) {
+                    case "string":
+                        fieldQuery = { contains: searchTerm }
+                        break
+                    case "date":
+                        console.log('yes', searchField, searchTerm)
+                        const date = dayjs(searchTerm)
+                        if (!date.isValid()) continue;
+                        fieldQuery = { equals: date.toISOString() }
+                        break
+                    case 'number':
+                        fieldQuery = { equals: +searchTerm }
+                        break;
+                }
+                where.OR.push({ [searchField]: fieldQuery })
+            }
             if (!isNaN(+searchTerm)) {
-                queryFields.push({
+                where.OR.push({
                     id: {
                         equals: +searchTerm,
                     },
                 })
             }
-            where = { OR: queryFields }
         }
         return where
     }

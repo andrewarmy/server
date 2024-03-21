@@ -11,6 +11,13 @@ export class PoliceService extends PrismaUtilService {
     super({
       prismaService: prismaService.police,
       selectColumns: { id: true, name: true, position: true, national_number: true, telephone_number: true, police_number: true },
+      smartSearch: {
+        name: 'string',
+        position: 'string',
+        national_number: 'string',
+        telephone_number: 'string',
+        police_number: 'string'
+      }
     })
   }
 

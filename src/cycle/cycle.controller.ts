@@ -12,13 +12,17 @@ export class CycleController {
         return this.cycleService.create(createCycleDto);
     }
 
-    @Get()
+    @Get('all/:groupId')
     findAll(
+        @Param('groupId') groupId: string,
         @Query('skip', ParseIntPipe) skip: number,
         @Query('take', ParseIntPipe) take: number,
         @Query('search') search?: string,
     ) {
-        return this.cycleService.findAll({ skip, take, search });
+        return this.cycleService.findAll({
+            skip, take, search,
+            where: { group_id: +groupId }
+        });
     }
 
     @Get(':id')

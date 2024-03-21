@@ -10,7 +10,12 @@ export class CycleService extends PrismaUtilService {
     constructor(protected readonly prismaService: PrismaService) {
         super({
             prismaService: prismaService.cycle,
-            selectColumns: { id: true, name: true },
+            selectColumns: { id: true, name: true, start_date: true, end_date: true },
+            smartSearch: {
+                name: 'string',
+                start_date: 'date',
+                end_date: 'date'
+            }
         })
     }
 

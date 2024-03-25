@@ -5,7 +5,7 @@ export enum Certificate {
     akok = 'ليسانس حقوق',
     hndsa = 'ب.هندسة',
     alom = 'ب.علوم',
-    khdma = 'ب.خدمةاجتماعية',
+    khdma = 'ب.خدمة اجتماعية',
     zra3a = 'ب.زراعة',
     teb = 'ب.طب',
     tgara_5aregia = 'ب.تجارة خارجية',

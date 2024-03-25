@@ -27,6 +27,7 @@ export class PoliceService extends PrismaUtilService {
         data: createPoliceDto
       })
     } catch (e) {
+      console.log(e)
       throw new BadRequestException()
     }
   }

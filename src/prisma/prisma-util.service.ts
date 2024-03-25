@@ -4,8 +4,8 @@ import dayjs from 'dayjs';
 type SmartSearchType = Record<string, 'string' | 'date' | 'number'>
 interface PrismaUtilConfig {
     prismaService: any;
-    selectColumns: Record<string, any>,
-    smartSearch?: SmartSearchType
+    selectColumns: Record<string, any>;
+    smartSearch?: SmartSearchType;
 }
 
 export class PrismaUtilService {
@@ -23,7 +23,7 @@ export class PrismaUtilService {
                     whereSearchQuery
                 ]
             },
-            select: selectColumns
+            select: selectColumns,
         })
 
         return {
@@ -32,9 +32,9 @@ export class PrismaUtilService {
         }
     }
 
-    async findOne(id: number) {
+    async findOne(id: number, options?: Record<string, any>) {
         const { prismaService } = this.prismaConfig
-        const data = await prismaService.findUnique({ where: { id } })
+        const data = await prismaService.findUnique({ where: { id }, ...options })
         if (!data) throw new NotFoundException()
         return data
     }

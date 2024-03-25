@@ -1,4 +1,4 @@
-import { Contains, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { Contains, IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 import { CreateContactDto } from "src/contact/dto/create-contact.dto";
 
 export enum PoliceType {
@@ -20,6 +20,8 @@ export enum PolicePosition {
 
 export class CreatePoliceDto extends CreateContactDto {
     @IsOptional()
+    @MaxLength(14)
+    @MinLength(14)
     @IsString()
     national_number?: string
 

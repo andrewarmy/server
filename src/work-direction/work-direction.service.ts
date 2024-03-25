@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateWorkDirectionDto } from './dto/create-work-direction.dto';
 import { UpdateWorkDirection } from './dto/update-work-direction.dto';
 import { PrismaUtilService } from 'src/prisma/prisma-util.service';
@@ -11,6 +11,9 @@ export class WorkDirectionService extends PrismaUtilService {
     super({
       prismaService: prismaService.workDirection,
       selectColumns: { id: true, name: true },
+      smartSearch: {
+        name: 'string'
+      }
     })
   }
 

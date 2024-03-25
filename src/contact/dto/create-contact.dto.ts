@@ -70,7 +70,6 @@ export class CreateContactDto {
     @IsEnum(Gender)
     gender: Gender
 
-
     // TODO: in the future we can split this into another table (1-m)
     @IsNotEmpty()
     @IsEnum(Certificate)

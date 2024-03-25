@@ -23,7 +23,7 @@ export class PoliceController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.policeService.findOne(+id);
+    return this.policeService.findOne(+id, { include: { workDirection: true } });
   }
 
   @Patch(':id')

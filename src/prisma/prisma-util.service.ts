@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
 
 type SmartSearchType = Record<string, 'string' | 'date' | 'number'>
@@ -39,15 +39,23 @@ export class PrismaUtilService {
         return data
     }
 
-    async remove(ids: number[]) {
+    async remove(id: number) {
         const { prismaService } = this.prismaConfig
-        for (const id of ids) {
+        try {
             await this.findOne(id)
             await prismaService.delete({
                 where: { id }
             })
+            return 'deleted'
+        } catch (e) {
+            throw new BadRequestException()
         }
-        return 'deleted'
+    }
+
+    async sleep(miliseconds: number) {
+        return new Promise((reslove) => setTimeout(() => {
+            reslove(true)
+        }, miliseconds))
     }
 
 

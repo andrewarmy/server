@@ -32,8 +32,7 @@ export class WorkDirectionController {
   }
 
   @Delete()
-  remove(@Query('ids') ids: string) {
-    const allId = ids?.split(',')?.map((id) => +id).filter(id => !isNaN(id) && id != 0) || []
-    return this.workDirection.remove(allId);
+  remove(@Query('id', ParseIntPipe) id: number) {
+    return this.workDirection.remove(id);
   }
 }

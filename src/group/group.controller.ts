@@ -32,8 +32,7 @@ export class GroupController {
     }
 
     @Delete()
-    remove(@Query('ids') ids: string) {
-        const allId = ids?.split(',')?.map((id) => +id).filter(id => !isNaN(id) && id != 0) || []
-        return this.groupService.remove(allId);
+    remove(@Query('id', ParseIntPipe) id: number) {
+        return this.groupService.remove(id);
     }
 }

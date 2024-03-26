@@ -32,8 +32,7 @@ export class IndividualController {
   }
 
   @Delete()
-  remove(@Query('ids') ids: string) {
-    const allId = ids?.split(',')?.map((id) => +id).filter(id => !isNaN(id) && id != 0) || []
-    return this.individualService.remove(allId);
+  remove(@Query('id', ParseIntPipe) id: number) {
+    return this.individualService.remove(id);
   }
 }

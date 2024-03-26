@@ -36,8 +36,8 @@ export class CycleController {
     }
 
     @Delete()
-    remove(@Query('ids') ids: string) {
-        const allId = ids?.split(',')?.map((id) => +id).filter(id => !isNaN(id) && id != 0) || []
-        return this.cycleService.remove(allId);
+    remove(@Query('id', ParseIntPipe) id: number) {
+        console.log(id)
+        return this.cycleService.remove(id);
     }
 }

@@ -19,23 +19,42 @@ export class CycleService extends PrismaUtilService {
         })
     }
 
-    async create(createCycle: CreateCycleDto) {
+    async create({ PolicesInCycles, ...createCycle }: CreateCycleDto) {
         try {
             return await this.prismaService.cycle.create({
-                data: createCycle
+                data: {
+                    ...createCycle,
+                    PolicesInCycles: {
+                        create: PolicesInCycles.map((police) => ({
+                            police_id: police.id,
+                            assigned_at: new Date()
+                        }))
+                    },
+                }
             })
         } catch (e) {
+            console.log(e)
             throw new BadRequestException()
         }
     }
 
-    async update(id: number, updateCycleDto: UpdateCycleDto) {
+    async update(id: number, { PolicesInCycles, ...updateCycleDto }: UpdateCycleDto) {
         try {
             return await this.prismaService.cycle.update({
-                data: updateCycleDto,
+                data: {
+                    ...updateCycleDto,
+                    // PolicesInCycles: {
+                    //     update: {
+                    //         data: {
+
+                    //         }
+                    //     }
+                    // }
+                },
                 where: { id }
             })
         } catch (e) {
+            console.log(e)
             throw new BadRequestException()
         }
     }

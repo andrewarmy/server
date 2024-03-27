@@ -1,6 +1,11 @@
-import { IsNotEmpty, IsNumber, IsString, MinLength } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsString, MinLength } from "class-validator";
+import { CreatePoliceDto } from "src/police/dto/create-police.dto";
 
-export class CreateCycleDto  {
+interface PoliceProps extends CreatePoliceDto {
+    id: number
+}
+
+export class CreateCycleDto {
     @IsNumber()
     group_id: number
 
@@ -15,5 +20,14 @@ export class CreateCycleDto  {
     @IsNotEmpty()
     @IsString()
     end_date: Date;
+
+    @IsArray()
+    PolicesInCycles: PoliceProps[]
+
+    // @IsArray()
+    // CiviliansInCycles: CreatePoliceDto[]
+
+    // @IsArray()
+    // IndividualsInCycle: CreateCivilianDto[]
 }
 

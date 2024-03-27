@@ -27,7 +27,19 @@ export class CycleController {
 
     @Get(':id')
     findOne(@Param('id') id: string) {
-        return this.cycleService.findOne(+id);
+        return this.cycleService.findOne(+id, {
+            include: {
+                PolicesInCycles: {
+                    select: { assigned_at: true, police: { select: { id: true, name: true } } }
+                },
+                CiviliansInCycles: {
+                    select: { assigned_at: true, civilian: { select: { id: true, name: true } } }
+                },
+                IndividualsInCycle: {
+                    select: { assigned_at: true, individual: { select: { id: true, name: true } } }
+                }
+            }
+        });
     }
 
     @Patch(':id')

@@ -23,7 +23,12 @@ export class CivilianController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.civilianService.findOne(+id, { include: { workDirection: true } });
+    return this.civilianService.findOne(+id, {
+      include: {
+        workDirection: true,
+        CiviliansInCycles: this.civilianService.includeCycles
+      }
+    });
   }
 
   @Patch(':id')

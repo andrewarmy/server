@@ -23,7 +23,12 @@ export class IndividualController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.individualService.findOne(+id, { include: { workDirection: true } });
+    return this.individualService.findOne(+id, {
+      include: {
+        workDirection: true,
+        IndividualsInCycle: this.individualService.includeCycles
+      }
+    });
   }
 
   @Patch(':id')

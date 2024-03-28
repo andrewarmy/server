@@ -6,8 +6,23 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class PoliceService extends PrismaUtilService {
+  readonly includeCycles = {
+    select: {
+      assigned_at: true,
+      cycle: {
+        select: {
+          name: true, group: {
+            select: {
+              name: true
+            }
+          }
+        }
+      },
+    }
+  }
 
   constructor(protected readonly prismaService: PrismaService) {
+
     super({
       prismaService: prismaService.police,
       selectColumns: { id: true, name: true, position: true, national_number: true, telephone_number: true, police_number: true },

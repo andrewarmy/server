@@ -26,8 +26,8 @@ export class CycleController {
     }
 
     @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.cycleService.findOne(+id, {
+    async findOne(@Param('id') id: string) {
+        const cycleData = await this.cycleService.findOne(+id, {
             include: {
                 PolicesInCycles: {
                     select: { assigned_at: true, police: { select: { id: true, name: true } } }
@@ -40,6 +40,10 @@ export class CycleController {
                 }
             }
         });
+        cycleData.PolicesInCycles = cycleData.PolicesInCycles.map(({police}) => police)
+        cycleData.CiviliansInCycles = cycleData.CiviliansInCycles.map(({civilian}) => civilian)
+        cycleData.IndividualsInCycle = cycleData.IndividualsInCycle.map(({individual}) => individual)
+        return cycleData
     }
 
     @Patch(':id')
